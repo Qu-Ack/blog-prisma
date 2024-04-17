@@ -1,6 +1,7 @@
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
+import prisma from '@/lib/db'
 
 export async function POST(req: Request) {
 
@@ -47,6 +48,28 @@ export async function POST(req: Request) {
         })
     }
 
-    console.log(evt)
+
+    const eventType = evt.type;
+
+    if (eventType === "user.created" || eventType === "user.updated") {
+
+        const user = await prisma.user.upsert({
+            where: {
+                externid: `${evt.data.id}`,
+            },
+            update: {
+                Name: `${evt.data.first_name}`
+            },
+            create: {
+                externid: `${evt.data.id}`,
+                Name: `${evt.data.first_name} ${evt.data.last_name}`,
+            },
+        })
+
+
+        console.log("user generated")
+    }
+
+
     return new Response('', { status: 200 })
 }

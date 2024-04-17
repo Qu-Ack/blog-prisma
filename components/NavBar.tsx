@@ -1,3 +1,6 @@
+'use client'
+
+
 import Image from "next/image"
 import Tiger from "@/public/tiger.svg"
 import Github from "@/public/github.svg"
@@ -6,13 +9,18 @@ import Instagram from "@/public/instagram.svg"
 import Linkedin from "@/public/linkedin.svg"
 import { SignedIn, UserButton } from "@clerk/nextjs"
 import { SignedOut } from "@clerk/nextjs"
+import { useUser } from "@clerk/nextjs"
+
  
 
 export default function NavBar() {
+
+    const {user} = useUser();
+
     return (
         <>
             <div className="flex justify-between w-screen bg-lime-900 h-[7vh] text-white font-sans text-sm pr-[256px] pl-[256px] items-center">
-                <p>New Delhi, India</p>
+                {user ? <p>{`${user.firstName} ${user.lastName}`}</p> : ""}
                 <div className="flex gap-[2rem]">
                     <SignedOut >
                         <Link href="/sign-in" >Sign In</Link>
