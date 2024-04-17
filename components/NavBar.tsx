@@ -14,12 +14,12 @@ export default function NavBar() {
             <div className="flex justify-between w-screen bg-lime-900 h-[7vh] text-white font-sans text-sm pr-[256px] pl-[256px] items-center">
                 <p>New Delhi, India</p>
                 <div className="flex gap-[2rem]">
-                    <SignedOut>
+                    <SignedOut >
                         <Link href="/sign-in" >Sign In</Link>
                         <Link href="/sign-up">Sign Up</Link>
                     </SignedOut>
                     <SignedIn>
-                        <UserButton/>
+                        <UserButton afterSignOutUrl="/"/>
                     </SignedIn>
                 </div>
 
