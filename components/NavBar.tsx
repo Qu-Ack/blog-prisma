@@ -11,15 +11,15 @@ import { SignedIn, UserButton } from "@clerk/nextjs"
 import { SignedOut } from "@clerk/nextjs"
 import { useUser } from "@clerk/nextjs"
 
- 
+
 
 export default function NavBar() {
 
-    const {user} = useUser();
+    const { user } = useUser();
 
     return (
         <>
-            <div className="flex justify-between w-screen bg-lime-900 h-[7vh] text-white font-sans text-sm pr-[256px] pl-[256px] items-center">
+            <div className="flex justify-between w-screen bg-lime-800 h-[7vh] text-white font-sans text-sm pr-[256px] pl-[256px] items-center">
                 {user ? <p>{`${user.firstName} ${user.lastName}`}</p> : ""}
                 <div className="flex gap-[2rem]">
                     <SignedOut >
@@ -27,7 +27,7 @@ export default function NavBar() {
                         <Link href="/sign-up">Sign Up</Link>
                     </SignedOut>
                     <SignedIn>
-                        <UserButton afterSignOutUrl="/"/>
+                        <UserButton afterSignOutUrl="/" />
                     </SignedIn>
                 </div>
 
@@ -49,7 +49,9 @@ export default function NavBar() {
                 <div className="flex">
                     <ul className="flex gap-[5rem] list-none items-center">
                         <li>
-                            Write
+                            <Link  className="hover:text-slate-400 transition-all" href="/write">
+                                Write
+                            </Link>
                         </li>
                         <li>
                             Memories
