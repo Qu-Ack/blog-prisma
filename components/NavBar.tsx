@@ -10,12 +10,17 @@ import Linkedin from "@/public/linkedin.svg"
 import { SignedIn, UserButton } from "@clerk/nextjs"
 import { SignedOut } from "@clerk/nextjs"
 import { useUser } from "@clerk/nextjs"
+import { usePathname } from "next/navigation"
+import clsx from "clsx"
 
 
 
 export default function NavBar() {
 
     const { user } = useUser();
+    const pathname = usePathname();
+    const writelink = '/write';
+    const homelink = '/'
 
     return (
         <>
@@ -36,7 +41,13 @@ export default function NavBar() {
                 <div className="flex">
                     <ul className="flex gap-[5rem] list-none items-center">
                         <li>
-                            Home
+                        <Link  className={clsx("hover:text-slate-400 transition-all", 
+                                {
+                                    'text-green-500' : pathname == homelink
+                                }
+                            )} href="/">
+                                Home
+                            </Link>
                         </li>
                         <li>
                             About Me
@@ -49,12 +60,16 @@ export default function NavBar() {
                 <div className="flex">
                     <ul className="flex gap-[5rem] list-none items-center">
                         <li>
-                            <Link  className="hover:text-slate-400 transition-all" href="/write">
+                            <Link  className={clsx("hover:text-slate-400 transition-all", 
+                                {
+                                    'text-green-500' : pathname == writelink
+                                }
+                            )} href="/write">
                                 Write
                             </Link>
                         </li>
                         <li>
-                            Memories
+                            Drafts
                         </li>
                     </ul>
                 </div>

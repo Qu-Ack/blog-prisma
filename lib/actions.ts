@@ -1,6 +1,8 @@
 'use server'
 
+import { redirect } from "next/navigation"
 import prisma from "./db"
+import { revalidatePath } from "next/cache"
 
 
 export async function handleFormData(userID: any, formData: FormData ) {
@@ -22,4 +24,31 @@ export async function handleFormData(userID: any, formData: FormData ) {
         }
     })
 
+    revalidatePath('/')
+    redirect('/')
+
+}
+
+
+export async function handleCommentSubmit(userID: any , blogid: any, formdata: FormData) {
+    const comment = formdata.get('comment');
+
+    const postcomment = await prisma.comment.create({
+        data:{
+            content: `${comment}`,
+            Post:{
+                connect: {
+                    id: `${blogid}`,
+                },
+            },
+            WrittenBy: {
+                connect: {
+                    externid: `${userID}`
+                }
+            }
+        }, 
+    })
+
+
+    revalidatePath(`/blogs/${blogid}`)
 }
